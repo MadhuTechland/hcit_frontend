@@ -9,6 +9,7 @@ import CpgAndRetailLayout from './pages/Industry/CpgAndRetailLayout.jsx';
 import IndustryDetail from './pages/Industry/IndustryDetail.jsx';
 import ServiceDetail from './pages/Service/ServiceDetail.jsx';
 import ProductDetail from './pages/Product/ProductDetail.jsx';
+import AboutDetail from './pages/About/AboutDetail.jsx';
 import BlogsLayout from './pages/Insights/BlogsLayout.jsx';
 import BlogDetails from './pages/Insights/BlogDetails.jsx';
 import NewspartOne from './pages/News/NewspartOne.jsx';
@@ -51,6 +52,8 @@ function AppContent() {
         <Route path="/services/:slug" element={<ServiceDetail />} />
         {/* Dynamic product route - must come before specific routes */}
         <Route path="/products/:slug" element={<ProductDetail />} />
+        {/* Dynamic about route - must come before specific routes */}
+        <Route path="/about/:slug" element={<AboutDetail />} />
         <Route path="/insights/blogs" element={<BlogsLayout />} />
         <Route path="/insights/blogs/blog-details" element={<BlogDetails />} />
         <Route path="/news/transformation" element={<NewspartOne />} />

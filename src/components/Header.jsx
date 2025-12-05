@@ -705,6 +705,7 @@ import { Link } from 'react-router-dom';
 import industryService from '../services/industryService';
 import serviceService from '../services/serviceService';
 import productService from '../services/productService';
+import aboutService from '../services/aboutService';
 
 const Header = () => {
     const [showIndustriesDropdown, setShowIndustriesDropdown] = useState(false);
@@ -716,6 +717,7 @@ const Header = () => {
     const [industries, setIndustries] = useState([]);
     const [services, setServices] = useState([]);
     const [products, setProducts] = useState([]);
+    const [aboutPages, setAboutPages] = useState([]);
 
     useEffect(() => {
         // Fetch industries from API
@@ -766,9 +768,27 @@ const Header = () => {
             }
         };
 
+        // Fetch about pages from API
+        const fetchAboutPages = async () => {
+            try {
+                const response = await aboutService.getAllPages();
+                // Response is directly the array, not response.data
+                const aboutData = Array.isArray(response) ? response : [];
+
+                // Filter active pages and sort by order
+                const activePages = aboutData.filter(item => item.is_active);
+                setAboutPages(activePages);
+            } catch (error) {
+                console.error('Error fetching about pages:', error);
+                // Fallback to empty array if API fails
+                setAboutPages([]);
+            }
+        };
+
         fetchIndustries();
         fetchServices();
         fetchProducts();
+        fetchAboutPages();
     }, []);
 
     const handleImageClick = (e) => {
@@ -1211,11 +1231,13 @@ const Header = () => {
                                                             {/* Left side - About list */}
                                                             <div className="col-lg-8 py-6 px-16 border-r border-gray-200">
                                                                 <div className="row">
-                                                                    {aboutData.map((item, index) => (
-                                                                        <div className="col-lg-6" key={index}>
+                                                                    {aboutPages.map((item, index) => (
+                                                                        <div className="col-lg-6" key={item.id || index}>
                                                                             <div className="cursor-pointer transition duration-150 text-start h-full  hover:bg-gray-50 rounded p-1">
-                                                                                <h5 className="font-bold text-base text-gray-900 mb-1">{item.title}</h5>
-                                                                                <p className="text-gray-600 text-xs leading-relaxed mb-1">{item.description}</p>
+                                                                                <Link to={`/about/${item.slug}`} onClick={() => handleLinkClick(setShowAboutDropdown)}>
+                                                                                    <h5 className="font-bold text-base text-gray-900 mb-1">{item.title}</h5>
+                                                                                    <p className="text-gray-600 text-xs leading-relaxed mb-1">{item.description}</p>
+                                                                                </Link>
                                                                             </div>
                                                                         </div>
                                                                     ))}
