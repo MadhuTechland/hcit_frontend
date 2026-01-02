@@ -105,11 +105,11 @@ const ServiceDetail = () => {
                     </div>
                 )}
 
-                {/* Right Content */}
+                {/* Right Content - Full width when no image */}
                 <div className="container">
                     <div className="row">
                         <div
-                            className="col-lg-6 offset-lg-6"
+                            className={service.detail_image ? "col-lg-6 offset-lg-6" : "col-lg-8 offset-lg-2"}
                             data-aos="fade-left"
                             data-aos-delay="300"
                         >
