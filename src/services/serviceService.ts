@@ -30,6 +30,7 @@ const serviceService = {
    * Get all active services
    */
   getAll: async (): Promise<ServicesResponse> => {
+    // return api.get('/services');
     return api.get('/services');
   },
 
