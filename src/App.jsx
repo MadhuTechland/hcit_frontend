@@ -25,7 +25,7 @@ function AppContent() {
 
   useEffect(() => {
     AOS.init({
-      duration: 800,     // global default duration in ms
+      duration: 800,     // global default duration in 800ms
       easing: "ease-out-cubic",
       once: false,       // whether animation should happen only once - set true if you want one-time
       mirror: false,     // whether elements should animate out while scrolling past them
