@@ -1021,18 +1021,13 @@ const Header = () => {
                         </button>
                         <Link className="navbar-brand" to="/">
                             <img src="/assets/img/logo.jpeg" className="logo logo-display" alt="Logo" />
-                            <img src="/assets/img/logo.jpeg" className="logo logo-scrolled" alt="Logo" />
+                            {/* <img src="/assets/img/logo.jpeg" className="logo logo-scrolled" alt="Logo" /> */}
                         </Link>
                     </div>
                     {/* End Header Navigation */}
 
                     {/* Collect the nav links, forms, and other content for toggling */}
-                    <div className="collapse navbar-collapse" id="navbar-menu">
-                        <img src="/assets/img/logo.jpeg" alt="Logo" />
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                            <i className="fa fa-times"></i>
-                        </button>
-
+                    <div  id="navbar-menu">
                         <ul className="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
                             {/* Industries Dropdown */}
                             <li
