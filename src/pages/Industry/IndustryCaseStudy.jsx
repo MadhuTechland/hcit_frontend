@@ -3,6 +3,7 @@ import caseStudyService from '../../services/caseStudyService';
 
 // Industry case studies component - fetches from API
 const IndustryCaseStudy = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const [caseStudies, setCaseStudies] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -16,7 +17,7 @@ const IndustryCaseStudy = () => {
                 // Transform API data to match component structure
                 const transformedCaseStudies = caseStudyData.slice(0, 5).map(item => ({
                     id: item.id,
-                    imageUrl: item.image ? `http://localhost:8000/storage/${item.image}` : "https://www.visionet.com/sites/default/files/2025-09/Events%20section%20581x292%20pxls.webp?fid=18066",
+                    imageUrl: item.image ? `${IMAGE_BASE_URL}/${item.image}` : "https://www.visionet.com/sites/default/files/2025-09/Events%20section%20581x292%20pxls.webp?fid=18066",
                     title: item.title,
                     date: new Date(item.published_date).toLocaleDateString('en-US', {
                         year: 'numeric',

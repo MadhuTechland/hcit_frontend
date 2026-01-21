@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { serviceService } from '../../services';
 
 const HomeServices = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -104,7 +105,7 @@ const HomeServices = () => {
                                     className="services-style-two-item service-card h-100"
                                     style={{
                                         backgroundImage: service.image
-                                            ? `url(${service.image})`
+                                            ? `url(${IMAGE_BASE_URL}/${service.image})`
                                             : "url('/assets/img/shape/banner-6.jpg')"
                                     }}
 

@@ -104,6 +104,7 @@ import { Link } from 'react-router-dom';
 import caseStudyService from '../../services/caseStudyService';
 
 const HomeCaseStudies = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [caseStudies, setCaseStudies] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -124,7 +125,7 @@ const HomeCaseStudies = () => {
                 // Transform API data to match component structure
                 const transformedCaseStudies = caseStudyData.slice(0, 3).map(item => ({
                     id: item.id,
-                    image: item.image ? `http://localhost:8000/storage/${item.image}` : "assets/img/blog/1.jpg",
+                    image: item.image ? `${IMAGE_BASE_URL}/${item.image}` : "assets/img/blog/1.jpg",
                     category: item.category || "Technology",
                     date: new Date(item.published_date).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -211,8 +212,10 @@ const HomeCaseStudies = () => {
                                         >
                                             <div className="thumb mb-0">
                                                 <a href="#">
-                                                    <div className="image-container">
-                                                        <img src={study.image} alt="Thumb" />
+                                                    <div className="relative w-full h-[260px] overflow-hidden rounded-xl">
+                                                        <img src={study.image} alt="Thumb"
+                                                        className="w-full h-[250px] object-cover object-center transition-transform duration-500 hover:scale-105"
+                                                       />
                                                         <div className={`splash-overlay ${hoveredIndex === index ? 'active' : ''}`}></div>
                                                     </div>
                                                 </a>

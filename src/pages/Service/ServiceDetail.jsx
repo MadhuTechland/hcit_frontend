@@ -7,6 +7,7 @@ import HomeContact from '../Home/HomeContact';
 import DynamicSection from '../Industry/DynamicSection';
 
 const ServiceDetail = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const { slug } = useParams();
     const [service, setService] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -99,7 +100,7 @@ const ServiceDetail = () => {
                         data-aos-duration="1200"
                     >
                         <img
-                            src={`http://localhost:8000/storage/${service.detail_image}`}
+                            src={`${IMAGE_BASE_URL}/${service.detail_image}`}
                             alt={service.title}
                         />
                     </div>

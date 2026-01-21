@@ -99,7 +99,7 @@ const ProductDetail = () => {
                         data-aos-duration="1200"
                     >
                         <img
-                            src={`http://localhost:8000/storage/${product.detail_image}`}
+                            src={`${IMAGE_BASE_URL}/${product.detail_image}`}
                             alt={product.title}
                         />
                     </div>

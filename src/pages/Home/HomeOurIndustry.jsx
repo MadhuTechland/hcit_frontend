@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import industryService from '../../services/industryService';
 
 const HomeLatestNews = () => {
+  const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +17,7 @@ const HomeLatestNews = () => {
         // Transform API data to match component structure
         const transformedIndustries = industryData.map(item => ({
           id: item.id,
-          image: item.image ? `http://localhost:8000/storage/${item.image}` : "assets/img/projects/1.jpg",
+          image: item.image ? `${IMAGE_BASE_URL}/${item.image}` : "assets/img/projects/1.jpg",
           shape: "assets/img/shape/4.png", // Default shape
           title: item.title,
           description: item.description,

@@ -166,10 +166,11 @@ const BlogsData = () => {
                                                         style={{ cursor: 'pointer' }}
                                                     >
                                                         <div className="thumb mb-0">
-                                                            <div className="image-container">
+                                                            <div className="relative w-full h-[260px] overflow-hidden rounded-xl">
                                                                 <img
                                                                     src={blog.featured_image || "/assets/img/blog/default.jpg"}
                                                                     alt={blog.title}
+                                                                    className="w-full h-[250px] object-cover object-center transition-transform duration-500 hover:scale-105"
                                                                 />
                                                                 <div className={`splash-overlay ${hoveredIndex === index ? 'active' : ''}`}></div>
                                                             </div>

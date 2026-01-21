@@ -3,11 +3,12 @@ import AOS from 'aos';
 
 // Dynamic section component that renders based on section_type
 const DynamicSection = ({ section }) => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const { section_type, title, subtitle, description, content, image, background_image, additional_data } = section;
 
     // Base URL for images
     const getImageUrl = (imagePath) => {
-        return imagePath ? `http://localhost:8000/storage/${imagePath}` : null;
+        return imagePath ? `${IMAGE_BASE_URL}/${imagePath}` : null;
     };
 
     // Render based on section type

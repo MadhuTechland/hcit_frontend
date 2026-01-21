@@ -119,6 +119,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const HomeTestimonials = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -135,7 +136,7 @@ const HomeTestimonials = () => {
                     id: item.id,
                     clientName: item.client_name,
                     clientTitle: item.client_position,
-                    clientImage: item.client_image ? `http://localhost:8000/storage/${item.client_image}` : "assets/img/team/11.jpg",
+                    clientImage: item.client_image ? `${IMAGE_BASE_URL}/${item.client_image}` : "assets/img/team/11.jpg",
                     content: item.content
                 }));
 

@@ -8,6 +8,7 @@ import HomeContact from '../Home/HomeContact';
 import DynamicSection from './DynamicSection';
 
 const IndustryDetail = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const { slug } = useParams();
     const [industry, setIndustry] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -100,7 +101,7 @@ const IndustryDetail = () => {
                         data-aos-duration="1200"
                     >
                         <img
-                            src={`http://localhost:8000/storage/${industry.detail_image}`}
+                            src={`${IMAGE_BASE_URL}/${industry.detail_image}`}
                             alt={industry.title}
                         />
                     </div>

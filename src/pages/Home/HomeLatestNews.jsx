@@ -21,11 +21,11 @@ const HomeLatestNews = () => {
             try {
                 const response = await newsService.getAll();
                 const newsData = response.data || [];
-
+                const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://floralwhite-kudu-744792.hostingersite.com//storage';
                 // Transform API data to match component structure
                 const transformedNews = newsData.slice(0, 3).map(item => ({
                     id: item.id,
-                    image: item.image ? `http://localhost:8000/storage/${item.image}` : "assets/img/blog/1.jpg",
+                    image: item.image ? `${IMAGE_BASE_URL}/${item.image}` : "assets/img/blog/1.jpg",
                     category: item.category || "Technology",
                     date: new Date(item.published_date).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -114,9 +114,18 @@ const HomeLatestNews = () => {
                             >
                                 <div className="thumb mb-0">
                                     <a href="#">
-                                        <div className="image-container">
-                                            <img src={news.image} alt="Thumb" />
-                                            <div className={`splash-overlay ${hoveredIndex === index ? 'active' : ''}`}></div>
+                                        <div className="relative w-full h-[260px] overflow-hidden rounded-xl">
+                                            <img
+                                            src={news.image}
+                                            alt="Thumb"
+                                            className="w-full h-[250px] object-cover object-center transition-transform duration-500 hover:scale-105"
+                                            />
+
+                                            {/* Splash overlay */}
+                                            <div
+                                            className={`absolute inset-0 bg-black/20 transition-opacity duration-300 
+                                            ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                                            />
                                         </div>
                                     </a>
                                 </div>

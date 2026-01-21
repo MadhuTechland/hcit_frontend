@@ -6,6 +6,7 @@ import aboutService from '../../services/aboutService';
 import HomeContact from '../Home/HomeContact';
 
 const AboutDetail = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const { slug } = useParams();
     const [aboutPage, setAboutPage] = useState(null);
     const [leadershipMembers, setLeadershipMembers] = useState([]);
@@ -180,7 +181,7 @@ const AboutDetail = () => {
                                 <div className="card h-100">
                                     {member.image && (
                                         <img
-                                            src={`http://localhost:8000/storage/${member.image}`}
+                                            src={`${IMAGE_BASE_URL}/${member.image}`}
                                             className="card-img-top"
                                             alt={member.name}
                                         />
@@ -225,7 +226,7 @@ const AboutDetail = () => {
                                     {partner.logo && (
                                         <div className="card-img-top p-4 text-center">
                                             <img
-                                                src={`http://localhost:8000/storage/${partner.logo}`}
+                                                src={`${IMAGE_BASE_URL}/${partner.logo}`}
                                                 alt={partner.name}
                                                 style={{ maxHeight: '100px', objectFit: 'contain' }}
                                             />
