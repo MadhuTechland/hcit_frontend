@@ -1027,12 +1027,11 @@ const Header = () => {
                     {/* End Header Navigation */}
 
                     {/* Collect the nav links, forms, and other content for toggling */}
-                    <div className="collapse navbar-collapse" id="navbar-menu">
-                        <img src="/assets/img/logo.jpeg" alt="Logo" />
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                    <div  id="navbar-menu">
+                        {/* <img src="/assets/img/logo.jpeg" alt="Logo" /> */}
+                        {/* <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i className="fa fa-times"></i>
-                        </button>
-
+                        </button> */}
                         <ul className="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
                             {/* Industries Dropdown */}
                             <li
@@ -1353,7 +1352,8 @@ const Header = () => {
                         <div className="widget">
                             <div className="logo">
                                 <Link to="/">
-                                    <img src="/assets/img/logo.jpeg" alt="Logo" />
+                                    {/* Hide this duplicate logo on small screens to avoid showing it inside the mobile menu */}
+                                    <img src="/assets/img/logo.jpeg" alt="Logo" className="d-none d-md-block" />
                                 </Link>
                             </div>
                             <p>
