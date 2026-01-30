@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Root-level logo-scrolled styles - positioned outside navbar */
+#root > img.logo.logo-scrolled {
+  display: none;
+  position: fixed;
+  top: 6px;
+  left: 20px;
+  z-index: 1000;
+  max-height: 35px;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none; /* Prevent interference with navigation */
+}
+
+/* Show logo-scrolled when navbar is sticked (using body class added by JS) */
+body.navbar-sticked #root > img.logo.logo-scrolled,
+body:has(nav.navbar.validnavs.sticked) #root > img.logo.logo-scrolled {
+  display: block;
+}
+
+/* Hide logo-scrolled on mobile devices to avoid interfering with mobile menu */
+@media (max-width: 991px) {
+  #root > img.logo.logo-scrolled {
+    display: none !important;
+  }
+}

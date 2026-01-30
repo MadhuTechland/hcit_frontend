@@ -37,11 +37,52 @@ function AppContent() {
     AOS.refresh();
   }, [location]);
 
+  // Sync navbar sticked state with body class for logo-scrolled visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector('nav.navbar.validnavs.navbar-sticky');
 
+      // Show the "scrolled" logo as soon as the user scrolls (desktop only),
+      // and also when the theme marks the navbar as "sticked".
+      const isDesktop = window.innerWidth > 1023;
+      const shouldShow =
+        isDesktop &&
+        (window.scrollY > 0 || (navbar && navbar.classList.contains('sticked')));
+
+      document.body.classList.toggle('navbar-sticked', Boolean(shouldShow));
+    };
+
+    // Check on mount
+    handleScroll();
+
+    // Listen for scroll events
+    window.addEventListener('scroll', handleScroll);
+
+    // Also observe navbar class changes (in case validnavs.js modifies it)
+    const navbar = document.querySelector('nav.navbar.validnavs.navbar-sticky');
+    if (navbar) {
+      const observer = new MutationObserver(handleScroll);
+      observer.observe(navbar, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        observer.disconnect();
+      };
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <Layout>
-      <Routes>
+    <>
+      <img src="/assets/img/logo.jpeg" className="logo logo-scrolled" alt="Logo" />
+      <Layout>
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
@@ -59,8 +100,9 @@ function AppContent() {
         <Route path="/news/transformation" element={<NewspartOne />} />
         <Route path="/services/digital-commerce" element={<DigitalServicesLayout />} />
         {/* <Route path="/solutions/hautelogic" element={<HauteLogicLayout />} /> */}
-      </Routes>
-    </Layout>
+        </Routes>
+      </Layout>
+    </>
   );
 }
 

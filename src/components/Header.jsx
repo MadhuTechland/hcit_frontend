@@ -701,7 +701,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import industryService from '../services/industryService';
 import serviceService from '../services/serviceService';
 import productService from '../services/productService';
@@ -714,10 +714,17 @@ const Header = () => {
     const [showAboutDropdown, setShowAboutDropdown] = useState(false);
     const [showInsightsDropdown, setShowInsightsDropdown] = useState(false);
     const [hidingDropdown, setHidingDropdown] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [industries, setIndustries] = useState([]);
     const [services, setServices] = useState([]);
     const [products, setProducts] = useState([]);
     const [aboutPages, setAboutPages] = useState([]);
+    const location = useLocation();
+
+    // Close menu on route change
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [location]);
 
     useEffect(() => {
         // Fetch industries from API
@@ -801,6 +808,57 @@ const Header = () => {
         dropdownSetter(false);
         setTimeout(() => setHidingDropdown(false), 300); // Match the CSS transition duration
     };
+
+    // Toggle menu function
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+        // The validnavs.js will handle the menu collapse/show classes
+        // We just need to sync the icon state
+    };
+
+    // Close menu when clicking outside or on route change
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const navbar = document.querySelector('.navbar');
+            const toggleButton = document.querySelector('.navbar-toggle');
+            
+            if (isMenuOpen && navbar && toggleButton) {
+                if (!navbar.contains(event.target) || event.target.closest('.nav a')) {
+                    setIsMenuOpen(false);
+                }
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isMenuOpen]);
+
+    // Sync menu state with validnavs.js behavior
+    useEffect(() => {
+        const navbarMenu = document.getElementById('navbar-menu');
+        if (!navbarMenu) return;
+
+        const observer = new MutationObserver(() => {
+            const hasShowClass = navbarMenu.classList.contains('show');
+            if (hasShowClass !== isMenuOpen) {
+                setIsMenuOpen(hasShowClass);
+            }
+        });
+
+        observer.observe(navbarMenu, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [isMenuOpen]);
 
     // Services data with paths
     const servicesData = [
@@ -1016,12 +1074,19 @@ const Header = () => {
                 <div className="container-full d-flex justify-content-between align-items-center">
                     {/* Start Header Navigation */}
                     <div className="navbar-header">
-                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                            <i className="fa fa-bars"></i>
+                        <button 
+                            type="button" 
+                            className="navbar-toggle" 
+                            data-toggle="collapse" 
+                            data-target="#navbar-menu"
+                            onClick={toggleMenu}
+                            aria-label="Toggle navigation"
+                            aria-expanded={isMenuOpen}
+                        >
+                            <i className={isMenuOpen ? "fa fa-times" : "fa fa-bars"}></i>
                         </button>
                         <Link className="navbar-brand" to="/">
                             <img src="/assets/img/logo.jpeg" className="logo logo-display" alt="Logo" />
-                            <img src="/assets/img/logo.jpeg" className="logo logo-scrolled" alt="Logo" />
                         </Link>
                     </div>
                     {/* End Header Navigation */}
