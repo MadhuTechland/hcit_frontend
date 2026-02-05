@@ -42,12 +42,12 @@ function AppContent() {
     const handleScroll = () => {
       const navbar = document.querySelector('nav.navbar.validnavs.navbar-sticky');
 
-      // Show the "scrolled" logo as soon as the user scrolls (desktop only),
-      // and also when the theme marks the navbar as "sticked".
+      // Show the "scrolled" logo when scroll passes 200px threshold (matching validnavs.js)
+      // or when the navbar already has the "sticked" class
       const isDesktop = window.innerWidth > 1023;
       const shouldShow =
         isDesktop &&
-        (window.scrollY > 0 || (navbar && navbar.classList.contains('sticked')));
+        (window.scrollY > 200 || (navbar && navbar.classList.contains('sticked')));
 
       document.body.classList.toggle('navbar-sticked', Boolean(shouldShow));
     };

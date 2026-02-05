@@ -4,21 +4,25 @@
 
 /* Root-level logo-scrolled styles - positioned outside navbar */
 #root > img.logo.logo-scrolled {
-  display: none;
   position: fixed;
-  top: 6px;
-  left: 20px;
-  z-index: 1000;
-  max-height: 35px;
+  top: 25px;
+  left: 25px;
+  z-index: 10000;
+  max-height: 40px;
   padding: 0;
-  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   pointer-events: none; /* Prevent interference with navigation */
+  visibility: hidden;
 }
 
 /* Show logo-scrolled when navbar is sticked (using body class added by JS) */
 body.navbar-sticked #root > img.logo.logo-scrolled,
 body:has(nav.navbar.validnavs.sticked) #root > img.logo.logo-scrolled {
-  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 /* Hide logo-scrolled on mobile devices to avoid interfering with mobile menu */
@@ -26,4 +30,22 @@ body:has(nav.navbar.validnavs.sticked) #root > img.logo.logo-scrolled {
   #root > img.logo.logo-scrolled {
     display: none !important;
   }
+}
+
+/* Navbar logo-display transitions */
+nav.navbar .navbar-brand img.logo.logo-display {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 1;
+}
+
+/* Hide navbar logo-display when sticked - the floating logo takes over */
+nav.navbar.validnavs.sticked .navbar-brand img.logo.logo-display {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Ensure the sticked navbar has proper height for logo alignment */
+nav.navbar.validnavs.sticked {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
