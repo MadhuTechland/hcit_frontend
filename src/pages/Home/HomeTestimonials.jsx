@@ -119,7 +119,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const HomeTestimonials = () => {
-    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://floralwhite-kudu-744792.hostingersite.com/storage';
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(true);

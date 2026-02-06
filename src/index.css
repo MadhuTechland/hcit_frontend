@@ -44,8 +44,68 @@ nav.navbar.validnavs.sticked .navbar-brand img.logo.logo-display {
   pointer-events: none;
 }
 
-/* Ensure the sticked navbar has proper height for logo alignment */
+/* Responsive header when scrolling */
+nav.navbar.validnavs {
+  transition: padding 0.3s ease-in-out, background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+nav.navbar.validnavs .navbar-header {
+  transition: all 0.3s ease-in-out;
+}
+
+nav.navbar.validnavs .container,
+nav.navbar.validnavs .container-full {
+  transition: padding 0.3s ease-in-out;
+}
+
+/* Sticked navbar - compact responsive header */
 nav.navbar.validnavs.sticked {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar.validnavs.sticked .navbar-header {
+  padding: 0;
+}
+
+nav.navbar.validnavs.sticked .navbar-brand img {
+  max-height: 35px;
+  transition: max-height 0.3s ease-in-out;
+}
+
+/* Responsive breakpoints for sticked navbar */
+@media (min-width: 992px) {
+  nav.navbar.validnavs.sticked {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  nav.navbar.validnavs.sticked .navbar-brand img {
+    max-height: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  nav.navbar.validnavs.sticked {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  nav.navbar.validnavs.sticked .navbar-brand img {
+    max-height: 45px;
+  }
+}
+
+/* Mobile sticked header adjustments */
+@media (max-width: 991px) {
+  nav.navbar.validnavs.sticked {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  nav.navbar.validnavs.sticked .navbar-toggle {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
