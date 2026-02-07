@@ -13120,10 +13120,13 @@ ul.list-style-one li::after {
 
 /* Styles for the service items */
 .services-style-two-item {
-	background: white;
 	padding: 30px;
 	margin-bottom: 30px;
 	border-radius: 8px;
+	background-color: white;
+	background-size: cover;
+	background-position: center;
+	min-height: 250px;
 }
 
 .services-style-two-item img {

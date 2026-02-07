@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { serviceService } from '../../services';
 
 const HomeServices = () => {
-    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://floralwhite-kudu-744792.hostingersite.com/uploads';
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
