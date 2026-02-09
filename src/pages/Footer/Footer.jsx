@@ -238,7 +238,7 @@ const Footer = () => {
 
           <div className="footer-shape">
             {/* We added the "rotating-globe" className here to target this specific image */}
-            <img className="rotating-globe" src="assets/img/shape/globe.png" alt="Image Not Found" />
+            <img className="rotating-globe" src="/assets/img/shape/globe.png" alt="Image Not Found" />
           </div>
           <div className="container">
             <div className="f-items default-padding">
@@ -309,7 +309,7 @@ const Footer = () => {
                 <div className="row align-center">
                   <div className="col-lg-6 col-md-6">
                     <div className="logo">
-                      <Link to="/"><img src="assets/img/logo.jpeg" alt="Logo" /></Link>
+                      <Link to="/"><img src="/assets/img/logo.jpeg" alt="Logo" /></Link>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6">
@@ -333,7 +333,7 @@ const Footer = () => {
                       {!settings.social_facebook && !settings.social_twitter && !settings.social_instagram && !settings.social_linkedin && (
                         <>
                           <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a></li>
-                          <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><img src="assets/img/icon/twitter-x.png" alt="Twitter/X" /></a></li>
+                          <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><img src="/assets/img/icon/twitter-x.png" alt="Twitter/X" /></a></li>
                           <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a></li>
                           <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></a></li>
                         </>

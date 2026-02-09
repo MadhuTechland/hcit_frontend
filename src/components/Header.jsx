@@ -715,15 +715,44 @@ const Header = () => {
     const [showInsightsDropdown, setShowInsightsDropdown] = useState(false);
     const [hidingDropdown, setHidingDropdown] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [mobileDropdowns, setMobileDropdowns] = useState({
+        industries: false,
+        services: false,
+        products: false,
+        about: false,
+        insights: false
+    });
     const [industries, setIndustries] = useState([]);
     const [services, setServices] = useState([]);
     const [products, setProducts] = useState([]);
     const [aboutPages, setAboutPages] = useState([]);
     const location = useLocation();
 
+    // Check if mobile view
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     // Close menu on route change
     useEffect(() => {
         setIsMenuOpen(false);
+        document.body.style.overflow = '';
+        setMobileDropdowns({
+            industries: false,
+            services: false,
+            products: false,
+            about: false,
+            insights: false
+        });
     }, [location]);
 
     useEffect(() => {
@@ -807,13 +836,55 @@ const Header = () => {
         setHidingDropdown(true);
         dropdownSetter(false);
         setTimeout(() => setHidingDropdown(false), 300); // Match the CSS transition duration
+        // Close mobile menu when a link is clicked
+        if (isMobile) {
+            closeMobileMenu();
+        }
     };
 
     // Toggle menu function
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-        // The validnavs.js will handle the menu collapse/show classes
-        // We just need to sync the icon state
+        const newState = !isMenuOpen;
+        setIsMenuOpen(newState);
+        // Lock/unlock body scroll
+        if (newState) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+            // Reset mobile dropdowns when closing menu
+            setMobileDropdowns({
+                industries: false,
+                services: false,
+                products: false,
+                about: false,
+                insights: false
+            });
+        }
+    };
+
+    // Toggle mobile dropdown
+    const toggleMobileDropdown = (dropdown, e) => {
+        if (isMobile) {
+            e.preventDefault();
+            e.stopPropagation();
+            setMobileDropdowns(prev => ({
+                ...prev,
+                [dropdown]: !prev[dropdown]
+            }));
+        }
+    };
+
+    // Close mobile menu
+    const closeMobileMenu = () => {
+        setIsMenuOpen(false);
+        document.body.style.overflow = '';
+        setMobileDropdowns({
+            industries: false,
+            services: false,
+            products: false,
+            about: false,
+            insights: false
+        });
     };
 
     // Close menu when clicking outside or on route change
@@ -1074,16 +1145,16 @@ const Header = () => {
                 <div className="container-full d-flex justify-content-between align-items-center">
                     {/* Start Header Navigation */}
                     <div className="navbar-header">
-                        <button 
-                            type="button" 
-                            className="navbar-toggle" 
-                            data-toggle="collapse" 
+                        <button
+                            type="button"
+                            className="navbar-toggle"
+                            data-toggle="collapse"
                             data-target="#navbar-menu"
                             onClick={toggleMenu}
                             aria-label="Toggle navigation"
                             aria-expanded={isMenuOpen}
                         >
-                            <i className={isMenuOpen ? "fa fa-times" : "fa fa-bars"}></i>
+                            <i className="fa fa-bars"></i>
                         </button>
                         <Link className="navbar-brand" to="/">
                             <img src="/assets/img/logo.jpeg" className="logo logo-display" alt="Logo" />
@@ -1091,26 +1162,49 @@ const Header = () => {
                     </div>
                     {/* End Header Navigation */}
 
+                    {/* Mobile menu overlay */}
+                    {isMobile && (
+                        <div
+                            className={`mobile-menu-overlay ${isMenuOpen ? 'active' : ''}`}
+                            onClick={closeMobileMenu}
+                        />
+                    )}
+
                     {/* Collect the nav links, forms, and other content for toggling */}
-                    <div  id="navbar-menu">
-                        {/* <img src="/assets/img/logo.jpeg" alt="Logo" /> */}
-                        {/* <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                            <i className="fa fa-times"></i>
-                        </button> */}
+                    <div id="navbar-menu" className={isMenuOpen && isMobile ? 'mobile-menu-open' : ''}>
+                        {/* Mobile menu header with logo and close */}
+                        {isMobile && (
+                            <div className="mobile-menu-header">
+                                <Link to="/" className="mobile-menu-logo" onClick={closeMobileMenu}>
+                                    <img src="/assets/img/logo.jpeg" alt="Logo" />
+                                </Link>
+                                <button
+                                    className="mobile-menu-close"
+                                    onClick={closeMobileMenu}
+                                    aria-label="Close menu"
+                                >
+                                    <i className="fa fa-times"></i>
+                                </button>
+                            </div>
+                        )}
                         <ul className="nav navbar-nav navbar-center" data-in="fadeInDown" data-out="fadeOutUp">
                             {/* Industries Dropdown */}
                             <li
-                                className="dropdown megamenu-fw megamenu-style-two column-two"
-                                onMouseEnter={() => setShowIndustriesDropdown(true)}
-                                onMouseLeave={() => setShowIndustriesDropdown(false)}
+                                className={`dropdown megamenu-fw megamenu-style-two column-two ${mobileDropdowns.industries ? 'dropdown-open' : ''}`}
+                                onMouseEnter={() => !isMobile && setShowIndustriesDropdown(true)}
+                                onMouseLeave={() => !isMobile && setShowIndustriesDropdown(false)}
                             >
-                                <a href="#" data-toggle="dropdown">
+                                <a
+                                    href="#"
+                                    data-toggle="dropdown"
+                                    onClick={(e) => toggleMobileDropdown('industries', e)}
+                                >
                                     Industries <i className="fas fa-chevron-down"></i>
                                 </a>
 
                                 {/* Industries Dropdown Content */}
-                                {showIndustriesDropdown && (
-                                    <ul className={`dropdown-menu megamenu-content animated fadeInDown ${hidingDropdown ? 'hiding' : ''}`} role="menu" style={{ display: 'block' }}>
+                                {(showIndustriesDropdown || mobileDropdowns.industries) && (
+                                    <ul className={`dropdown-menu megamenu-content animated fadeInDown ${hidingDropdown ? 'hiding' : ''} ${mobileDropdowns.industries ? 'mobile-dropdown-open' : ''}`} role="menu" style={{ display: 'block' }}>
                                         <li>
                                             <div className="">
                                                 <div className="">
@@ -1159,17 +1253,21 @@ const Header = () => {
 
                             {/* Services Dropdown */}
                             <li
-                                className="dropdown megamenu-fw megamenu-style-two column-two"
-                                onMouseEnter={() => setShowServicesDropdown(true)}
-                                onMouseLeave={() => setShowServicesDropdown(false)}
+                                className={`dropdown megamenu-fw megamenu-style-two column-two ${mobileDropdowns.services ? 'dropdown-open' : ''}`}
+                                onMouseEnter={() => !isMobile && setShowServicesDropdown(true)}
+                                onMouseLeave={() => !isMobile && setShowServicesDropdown(false)}
                             >
-                                <a href="#" data-toggle="dropdown">
+                                <a
+                                    href="#"
+                                    data-toggle="dropdown"
+                                    onClick={(e) => toggleMobileDropdown('services', e)}
+                                >
                                     Services <i className="fas fa-chevron-down"></i>
                                 </a>
 
                                 {/* Services Dropdown Content */}
-                                {showServicesDropdown && (
-                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''}`} role="menu" style={{ display: 'block' }}>
+                                {(showServicesDropdown || mobileDropdowns.services) && (
+                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''} ${mobileDropdowns.services ? 'mobile-dropdown-open' : ''}`} role="menu" style={{ display: 'block' }}>
                                         <li>
                                             <div className="">
                                                 <div className="">
@@ -1217,17 +1315,21 @@ const Header = () => {
 
                             {/* Products & Solutions Dropdown */}
                             <li
-                                className="dropdown megamenu-fw megamenu-style-two column-two"
-                                onMouseEnter={() => setShowProductsDropdown(true)}
-                                onMouseLeave={() => setShowProductsDropdown(false)}
+                                className={`dropdown megamenu-fw megamenu-style-two column-two ${mobileDropdowns.products ? 'dropdown-open' : ''}`}
+                                onMouseEnter={() => !isMobile && setShowProductsDropdown(true)}
+                                onMouseLeave={() => !isMobile && setShowProductsDropdown(false)}
                             >
-                                <a href="#" data-toggle="dropdown">
+                                <a
+                                    href="#"
+                                    data-toggle="dropdown"
+                                    onClick={(e) => toggleMobileDropdown('products', e)}
+                                >
                                     Products & Solutions <i className="fas fa-chevron-down"></i>
                                 </a>
 
                                 {/* Products Dropdown Content */}
-                                {showProductsDropdown && (
-                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''}`} role="menu" style={{ display: 'block' }}>
+                                {(showProductsDropdown || mobileDropdowns.products) && (
+                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''} ${mobileDropdowns.products ? 'mobile-dropdown-open' : ''}`} role="menu" style={{ display: 'block' }}>
                                         <li>
                                             <div className="">
                                                 <div className="">
@@ -1276,17 +1378,21 @@ const Header = () => {
 
                             {/* About HC IT Dropdown */}
                             <li
-                                className="dropdown megamenu-fw megamenu-style-two column-two"
-                                onMouseEnter={() => setShowAboutDropdown(true)}
-                                onMouseLeave={() => setShowAboutDropdown(false)}
+                                className={`dropdown megamenu-fw megamenu-style-two column-two ${mobileDropdowns.about ? 'dropdown-open' : ''}`}
+                                onMouseEnter={() => !isMobile && setShowAboutDropdown(true)}
+                                onMouseLeave={() => !isMobile && setShowAboutDropdown(false)}
                             >
-                                <a href="#" data-toggle="dropdown">
+                                <a
+                                    href="#"
+                                    data-toggle="dropdown"
+                                    onClick={(e) => toggleMobileDropdown('about', e)}
+                                >
                                     About HC IT <i className="fas fa-chevron-down"></i>
                                 </a>
 
                                 {/* About Dropdown Content */}
-                                {showAboutDropdown && (
-                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''}`} role="menu" style={{ display: 'block' }}>
+                                {(showAboutDropdown || mobileDropdowns.about) && (
+                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''} ${mobileDropdowns.about ? 'mobile-dropdown-open' : ''}`} role="menu" style={{ display: 'block' }}>
                                         <li>
                                             <div className="">
                                                 <div className="">
@@ -1334,17 +1440,21 @@ const Header = () => {
 
                             {/* Insights Dropdown */}
                             <li
-                                className="dropdown megamenu-fw megamenu-style-two column-two"
-                                onMouseEnter={() => setShowInsightsDropdown(true)}
-                                onMouseLeave={() => setShowInsightsDropdown(false)}
+                                className={`dropdown megamenu-fw megamenu-style-two column-two ${mobileDropdowns.insights ? 'dropdown-open' : ''}`}
+                                onMouseEnter={() => !isMobile && setShowInsightsDropdown(true)}
+                                onMouseLeave={() => !isMobile && setShowInsightsDropdown(false)}
                             >
-                                <a href="#" data-toggle="dropdown">
+                                <a
+                                    href="#"
+                                    data-toggle="dropdown"
+                                    onClick={(e) => toggleMobileDropdown('insights', e)}
+                                >
                                     Insights <i className="fas fa-chevron-down"></i>
                                 </a>
 
                                 {/* Insights Dropdown Content */}
-                                {showInsightsDropdown && (
-                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''}`} role="menu" style={{ display: 'block' }}>
+                                {(showInsightsDropdown || mobileDropdowns.insights) && (
+                                    <ul className={`dropdown-menu megamenu-content ${hidingDropdown ? 'hiding' : ''} ${mobileDropdowns.insights ? 'mobile-dropdown-open' : ''}`} role="menu" style={{ display: 'block' }}>
                                         <li>
                                             <div className="">
                                                 <div className="">
