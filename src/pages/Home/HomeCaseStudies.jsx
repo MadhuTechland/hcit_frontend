@@ -125,7 +125,7 @@ const HomeCaseStudies = () => {
                 // Transform API data to match component structure
                 const transformedCaseStudies = caseStudyData.slice(0, 3).map(item => ({
                     id: item.id,
-                    image: item.image ? `${IMAGE_BASE_URL}/case-studies/${item.image}` : "assets/img/blog/1.jpg",
+                    image: item.image ? `${IMAGE_BASE_URL}/${item.image}` : "assets/img/blog/1.jpg",
                     category: item.category || "Technology",
                     date: new Date(item.published_date).toLocaleDateString('en-US', {
                         year: 'numeric',
