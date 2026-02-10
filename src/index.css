@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Root-level logo-scrolled styles - positioned outside navbar */
-#root > img.logo.logo-scrolled {
+#root>img.logo.logo-scrolled {
   position: fixed;
   top: 25px;
   left: 25px;
@@ -13,13 +13,14 @@
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-  pointer-events: none; /* Prevent interference with navigation */
+  pointer-events: none;
+  /* Prevent interference with navigation */
   visibility: hidden;
 }
 
 /* Show logo-scrolled when navbar is sticked (using body class added by JS) */
-body.navbar-sticked #root > img.logo.logo-scrolled,
-body:has(nav.navbar.validnavs.sticked) #root > img.logo.logo-scrolled {
+body.navbar-sticked #root>img.logo.logo-scrolled,
+body:has(nav.navbar.validnavs.sticked) #root>img.logo.logo-scrolled {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
@@ -27,7 +28,7 @@ body:has(nav.navbar.validnavs.sticked) #root > img.logo.logo-scrolled {
 
 /* Hide logo-scrolled on mobile devices to avoid interfering with mobile menu */
 @media (max-width: 991px) {
-  #root > img.logo.logo-scrolled {
+  #root>img.logo.logo-scrolled {
     display: none !important;
   }
 }
@@ -118,6 +119,8 @@ nav.navbar.validnavs.sticked .navbar-brand img {
 @media (max-width: 1023px) {
   nav.navbar.validnavs .container-full {
     padding: 12px 15px;
+    justify-content: center !important;
+    position: relative;
   }
 
   /* Navbar header - centered layout */
@@ -126,8 +129,8 @@ nav.navbar.validnavs.sticked .navbar-brand img {
     align-items: center;
     justify-content: center;
     width: 100%;
-    position: relative;
-    min-height: 50px;
+    position: static;
+    min-height: 37px;
   }
 
   /* Logo centered */
@@ -135,18 +138,20 @@ nav.navbar.validnavs.sticked .navbar-brand img {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
   }
 
   nav.navbar.validnavs .navbar-brand img.logo {
     max-height: 40px;
   }
 
-  /* Toggle button beside center logo */
+  /* Toggle button (hamburger) beside center logo */
   nav.navbar.validnavs .navbar-toggle {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 8px !important;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -155,13 +160,17 @@ nav.navbar.validnavs.sticked .navbar-brand img {
     left: 15px;
   }
 
+  /* Dark hamburger icon by default (when scrolled, white bg visible) */
   nav.navbar.validnavs .navbar-toggle i {
     font-size: 22px;
-    color: var(--white);
+    color: var(--color-heading) !important;
   }
 
-  nav.navbar.validnavs.sticked .navbar-toggle i {
-    color: var(--color-heading);
+  /* White hamburger icon when navbar has transparent background (top of page) */
+  nav.navbar.validnavs.no-background .navbar-toggle i {
+    font-size: 22px;
+    /* color: #ffffff !important; */
+    color: black !important;
   }
 
   /* Hide desktop menu on mobile */
@@ -217,12 +226,12 @@ nav.navbar.validnavs.sticked .navbar-brand img {
     margin-top: 20px;
   }
 
-  nav.navbar.validnavs #navbar-menu ul.navbar-nav > li {
+  nav.navbar.validnavs #navbar-menu ul.navbar-nav>li {
     display: block;
     border-bottom: 1px solid #eee;
   }
 
-  nav.navbar.validnavs #navbar-menu ul.navbar-nav > li > a {
+  nav.navbar.validnavs #navbar-menu ul.navbar-nav>li>a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -232,11 +241,11 @@ nav.navbar.validnavs.sticked .navbar-brand img {
     color: var(--color-heading);
   }
 
-  nav.navbar.validnavs #navbar-menu ul.navbar-nav > li > a i {
+  nav.navbar.validnavs #navbar-menu ul.navbar-nav>li>a i {
     transition: transform 0.3s ease;
   }
 
-  nav.navbar.validnavs #navbar-menu ul.navbar-nav > li.dropdown-open > a i {
+  nav.navbar.validnavs #navbar-menu ul.navbar-nav>li.dropdown-open>a i {
     transform: rotate(180deg);
   }
 

@@ -1157,7 +1157,7 @@ const Header = () => {
                             <i className="fa fa-bars"></i>
                         </button>
                         <Link className="navbar-brand" to="/">
-                            <img src="/assets/img/logo.jpeg" className="logo logo-display" alt="Logo" />
+                            <img src="/assets/img/logo.jpeg" className="logo logo-display123 center" alt="Logo" />
                         </Link>
                     </div>
                     {/* End Header Navigation */}
@@ -1585,7 +1585,7 @@ const Header = () => {
                 </div>
 
                 {/* Overlay screen for menu */}
-                <div className="overlay-screen"></div>
+                {/* <div className="overlay-screen"></div> */}
                 {/* End Overlay screen for menu */}
             </nav>
             {/* End Navigation */}
