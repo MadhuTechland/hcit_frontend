@@ -1157,7 +1157,7 @@ const Header = () => {
                             <i className="fa fa-bars"></i>
                         </button>
                         <Link className="navbar-brand" to="/">
-                            <img src="/assets/img/logo.jpeg" className="logo logo-display123 center" alt="Logo" />
+                            <img src="/assets/img/logo.jpeg" className="logo logo-display" alt="Logo" />
                         </Link>
                     </div>
                     {/* End Header Navigation */}
