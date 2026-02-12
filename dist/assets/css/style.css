@@ -747,7 +747,7 @@ p {
 
 .default-padding {
 	padding-top: 120px;
-	padding-bottom: 120px;
+	padding-bottom: 50px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -7454,7 +7454,7 @@ ul.pricing-types li:nth-child(3) .icon {
 }
 
 .contact-form-card {
-	padding: 80px;
+	padding: 10px 80px;
 	border-radius: 10px;
 }
 
@@ -7481,9 +7481,9 @@ ul.pricing-types li:nth-child(3) .icon {
 	box-shadow: none;
 }
 
-.contact-form-card .form-group textarea {
-	height: 150px;
-}
+/* .contact-form-card .form-group textarea {
+	height: 96px;
+} */
 
 /* ============================================================== 
     # Testimonial

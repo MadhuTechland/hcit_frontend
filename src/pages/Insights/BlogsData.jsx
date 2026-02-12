@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowRight } from 'lucide-react';
+import { Search, ArrowRight, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { blogService } from '../../services';
 
 const BlogsData = () => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const IMAGE_BASE_URL = "https://floralwhite-kudu-744792.hostingersite.com";
     const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [selectedTopics, setSelectedTopics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -111,33 +111,176 @@ const BlogsData = () => {
 
     return (
         <div>
+            <style>{`
+                .blog-card-modern {
+                    position: relative;
+                    border-radius: 14px;
+                    overflow: hidden;
+                    background: #1a1a2e;
+                    border: 1px solid rgba(255,255,255,0.08);
+                    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+                    cursor: pointer;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .blog-card-modern:hover {
+                    transform: translateY(-6px);
+                    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+                    border-color: rgba(102,126,234,0.3);
+                }
+                .blog-card-img {
+                    position: relative;
+                    height: 210px;
+                    overflow: hidden;
+                }
+                .blog-card-img img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                }
+                .blog-card-modern:hover .blog-card-img img {
+                    transform: scale(1.08);
+                }
+                .blog-card-img::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 50%;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+                    pointer-events: none;
+                }
+                .blog-card-badge {
+                    position: absolute;
+                    top: 12px;
+                    left: 12px;
+                    z-index: 2;
+                    padding: 4px 14px;
+                    border-radius: 20px;
+                    font-size: 10px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.8px;
+                    color: #fff;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                }
+                .blog-card-body {
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+                .blog-card-date {
+                    font-size: 12px;
+                    color: rgba(255,255,255,0.45);
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .blog-card-title {
+                    font-size: 16px;
+                    font-weight: 700;
+                    line-height: 1.45;
+                    color: #fff;
+                    margin-bottom: 10px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    transition: color 0.3s ease;
+                }
+                .blog-card-modern:hover .blog-card-title {
+                    color: #a78bfa;
+                }
+                .blog-card-excerpt {
+                    font-size: 13px;
+                    line-height: 1.6;
+                    color: rgba(255,255,255,0.4);
+                    margin-bottom: 16px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    flex: 1;
+                }
+                .blog-card-link {
+                    font-size: 13px;
+                    font-weight: 600;
+                    color: #667eea;
+                    text-decoration: none;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    transition: gap 0.3s ease, color 0.3s ease;
+                    margin-top: auto;
+                }
+                .blog-card-modern:hover .blog-card-link {
+                    gap: 10px;
+                    color: #a78bfa;
+                }
+                .blog-search-input {
+                    background: #1a1a2e;
+                    border: 1px solid rgba(255,255,255,0.12);
+                    border-radius: 12px;
+                    color: #fff;
+                    padding: 12px 18px;
+                    font-size: 14px;
+                    transition: border-color 0.3s ease, background 0.3s ease;
+                }
+                .blog-search-input:focus {
+                    background: #1f1f35;
+                    border-color: rgba(102,126,234,0.5);
+                    color: #fff;
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+                }
+                .blog-search-input::placeholder {
+                    color: rgba(255,255,255,0.4);
+                }
+                .blog-search-btn {
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    border: none;
+                    border-radius: 12px;
+                    padding: 12px 18px;
+                    transition: opacity 0.3s ease, transform 0.2s ease;
+                }
+                .blog-search-btn:hover {
+                    opacity: 0.9;
+                    transform: scale(1.02);
+                }
+            `}</style>
+
             <div className="services-details-area py-5">
                 <div className="container">
                     <div className="services-details-items">
                         <div className="row">
 
-                            {/* 🔍 Search Bar */}
+                            {/* Search Bar */}
                             <div className="col-12 mb-4" data-aos="fade-down">
-                                <div className="search-bar d-flex align-items-center">
+                                <div className="d-flex align-items-center gap-2">
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control blog-search-input"
                                         placeholder="Search blogs..."
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                     />
-                                    <button className="btn btn-primary ms-2 d-flex align-items-center justify-content-center">
+                                    <button className="btn blog-search-btn d-flex align-items-center justify-content-center text-white">
                                         <Search size={18} />
                                     </button>
                                 </div>
                             </div>
 
-                            {/* 📰 Blog Cards Section */}
+                            {/* Blog Cards Section */}
                             <div className="col-xl-8 col-lg-8 order-lg-last pl-35 pl-md-15 pl-xs-15">
                                 <div className="blog-item-box">
                                     {loading ? (
                                         <div className="text-center py-5">
-                                            <div className="spinner-border" role="status">
+                                            <div className="spinner-border text-light" role="status">
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                         </div>
@@ -154,51 +297,44 @@ const BlogsData = () => {
                                             {blogs.map((blog, index) => (
                                                 <div
                                                     key={blog.id}
-                                                    className="col-xl-4 col-lg-6 col-md-6 gap-2 mb-3"
-                                                    data-aos="zoom-in"
-                                                    data-aos-delay={index * 150}
+                                                    className="col-xl-6 col-lg-6 col-md-6 mb-4"
+                                                    data-aos="fade-up"
+                                                    data-aos-delay={index * 100}
                                                 >
                                                     <div
-                                                        className="blog-style-two fade-up-anim news-card"
-                                                        onMouseEnter={() => setHoveredIndex(index)}
-                                                        onMouseLeave={() => setHoveredIndex(null)}
+                                                        className="blog-card-modern"
                                                         onClick={() => handleBoxClick(blog.slug)}
-                                                        style={{ cursor: 'pointer' }}
                                                     >
-                                                        <div className="thumb mb-0">
-                                                            <div className="relative w-full h-[260px] overflow-hidden rounded-xl">
-                                                                <img
-                                                                    src={blog.featured_image || "/assets/img/blog/default.jpg"}
-                                                                    alt={blog.title}
-                                                                    className="w-full h-[250px] object-cover object-center transition-transform duration-500 hover:scale-105"
-                                                                />
-                                                                <div className={`splash-overlay ${hoveredIndex === index ? 'active' : ''}`}></div>
-                                                            </div>
+                                                        <div className="blog-card-img">
+                                                            <span className="blog-card-badge">
+                                                                {blog.category?.name || 'Blog'}
+                                                            </span>
+                                                            <img
+                                                                src={`${IMAGE_BASE_URL}${blog.featured_image || "assets/img/blog/default.jpg"}`}
+                                                                alt={blog.title}
+                                                            />
                                                         </div>
 
-                                                        <div className="info mt-2">
-                                                            <ul className='d-flex align-items-center justify-content-between mb-1'>
-                                                                <li className='text-xs'>{formatDate(blog.published_at)}</li>
-                                                                <li className='text-xs text-red ps-3'>
-                                                                    {blog.category?.name || 'Blog'}
-                                                                </li>
-                                                            </ul>
+                                                        <div className="blog-card-body">
+                                                            <div className="blog-card-date">
+                                                                <Calendar size={13} />
+                                                                {formatDate(blog.published_at)}
+                                                            </div>
 
-                                                            <h6 className="blog-title">
-                                                                <a href="#">{blog.title}</a>
-                                                            </h6>
+                                                            <h4 className="blog-card-title">
+                                                                {blog.title}
+                                                            </h4>
 
                                                             {blog.excerpt && (
-                                                                <p className="text-xs text-muted mt-1">
-                                                                    {blog.excerpt.substring(0, 80)}...
+                                                                <p className="blog-card-excerpt">
+                                                                    {blog.excerpt}
                                                                 </p>
                                                             )}
 
-                                                            <a href="#" className="text-white d-flex align-items-center gap-1 mt-1 text-xs">
+                                                            <span className="blog-card-link">
                                                                 Read More <ArrowRight size={14} />
-                                                            </a>
+                                                            </span>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             ))}
@@ -207,7 +343,7 @@ const BlogsData = () => {
                                 </div>
                             </div>
 
-                            {/* 📌 Sidebar Filters */}
+                            {/* Sidebar Filters */}
                             <div
                                 className="col-xl-4 col-lg-4 mt-md-120 mt-xs-50 services-sidebar"
                                 data-aos="fade-left"

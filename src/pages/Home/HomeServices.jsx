@@ -54,7 +54,7 @@ const HomeServices = () => {
     }, []);
 
     return (
-        <div className="services-style-two-area py-5 bg-gray blurry-shape-right-bottom">
+        <div className="services-style-two-area py-3 bg-dark blurry-shape-right-bottom">
 
             {/* Heading Section */}
             <div className="container">
@@ -65,16 +65,16 @@ const HomeServices = () => {
                             <h4
                                 className="sub-title"
                                 data-aos="fade-up"
-                                data-aos-duration="800"
+                                data-aos-duration="400"
                             >
                                 What we do
                             </h4>
 
                             <h2
                                 className="title split-text-right split-text-in-right"
-                                data-aos="zoom-in-up"
-                                data-aos-duration="1200"
-                                data-aos-delay="200"
+                                data-aos="fade-up"
+                                data-aos-duration="500"
+                                data-aos-delay="100"
                             >
                                 Our Services
                             </h2>
@@ -99,7 +99,7 @@ const HomeServices = () => {
                 ) : (
                     <div className="row">
                         {services.slice(0, 6).map((service, index) => (
-                            <div key={service.id} className="col-lg-4 col-md-6 mb-4">
+                            <div key={service.id} className="col-lg-4 col-md-6 mb-3">
 
                                 <div
                                     className="services-style-two-item service-card h-100"
@@ -111,8 +111,8 @@ const HomeServices = () => {
 
                                     data-aos="flip-left"
                                     data-aos-easing="ease-out-cubic"
-                                    data-aos-duration={1000}
-                                    data-aos-delay={index * 200}
+                                    data-aos-duration={600}
+                                    data-aos-delay={index * 100}
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
                                 >
@@ -124,8 +124,6 @@ const HomeServices = () => {
                                                 <img
                                                     src={service.icon.startsWith('http') ? service.icon : `assets/img/icon/${service.icon}.png`}
                                                     alt={`${service.title} Icon`}
-                                                    data-aos="zoom-in"
-                                                    data-aos-duration="800"
                                                 />
                                             )}
 
@@ -136,8 +134,6 @@ const HomeServices = () => {
                                         <Link
                                             to={`/services/${service.slug}`}
                                             className="text-white mt-auto"
-                                            data-aos="fade-in"
-                                            data-aos-duration="600"
                                         >
                                             Explore More <i className="fas fa-long-arrow-right"></i>
                                         </Link>

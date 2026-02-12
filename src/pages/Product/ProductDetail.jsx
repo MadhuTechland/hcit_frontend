@@ -7,6 +7,7 @@ import HomeContact from '../Home/HomeContact';
 import DynamicSection from '../Industry/DynamicSection';
 
 const ProductDetail = () => {
+    const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL;
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);

@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import { blogService } from '../../services';
 
 const BlogDetails = () => {
+    const IMAGE_BASE_URL = "https://floralwhite-kudu-744792.hostingersite.com";
     const { slug } = useParams();
     const [blog, setBlog] = useState(null);
     const [recentBlogs, setRecentBlogs] = useState([]);
@@ -154,7 +155,7 @@ const BlogDetails = () => {
                                         >
                                             {blog.featured_image && (
                                                 <div className="thumb mb-4">
-                                                    <img src={blog.featured_image} alt={blog.title} />
+                                                    <img src={`${IMAGE_BASE_URL}${blog.featured_image}`} alt={blog.title} />
                                                 </div>
                                             )}
                                             <div className="info">
@@ -242,7 +243,7 @@ const BlogDetails = () => {
                                                         <div className="thumb">
                                                             <Link to={`/insights/blogs/${recentBlog.slug}`}>
                                                                 <img
-                                                                    src={recentBlog.featured_image || "/assets/img/blog/default.jpg"}
+                                                                    src={`${IMAGE_BASE_URL}${blog.featured_image||  "/assets/img/blog/default.jpg"}`}
                                                                     alt={recentBlog.title}
                                                                 />
                                                             </Link>

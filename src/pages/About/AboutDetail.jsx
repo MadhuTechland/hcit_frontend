@@ -173,44 +173,56 @@ const AboutDetail = () => {
 
             {/* Leadership Members Section */}
             {slug === 'our-leadership' && leadershipMembers.length > 0 && (
-                <div className="container pb-5">
-                    <h2 className="text-center mb-5" data-aos="fade-up">Our Leadership Team</h2>
-                    <div className="row">
-                        {leadershipMembers.map((member, index) => (
-                            <div className="col-lg-3 col-md-6 mb-4" key={member.id} data-aos="fade-up" data-aos-delay={index * 100}>
-                                <div className="card h-100">
-                                    {member.image && (
-                                        <img
-                                            src={`${IMAGE_BASE_URL}/${member.image}`}
-                                            className="card-img-top"
-                                            alt={member.name}
-                                        />
-                                    )}
-                                    <div className="card-body">
-                                        <h5 className="card-title">{member.name}</h5>
-                                        <p className="card-text text-muted">{member.title}</p>
-                                        {member.department && (
-                                            <p className="card-text"><small>{member.department}</small></p>
-                                        )}
-                                        {member.bio && (
-                                            <p className="card-text">{member.bio}</p>
-                                        )}
-                                        <div className="social-links mt-3">
-                                            {member.linkedin_url && (
-                                                <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" className="me-2">
-                                                    <i className="fab fa-linkedin"></i>
-                                                </a>
+                <div className="leadership-section pb-5">
+                    <div className="container">
+                        <div className="text-center mb-5" data-aos="fade-up">
+                            <span className="leadership-subtitle">Meet the Experts</span>
+                            <h2 className="leadership-heading">Our Leadership Team</h2>
+                        </div>
+                        <div className="row justify-content-center">
+                            {leadershipMembers.map((member, index) => (
+                                <div className="col-xl-3 col-lg-4 col-md-6 mb-4" key={member.id} data-aos="fade-up" data-aos-delay={index * 100}>
+                                    <div className="leadership-card">
+                                        <div className="leadership-card-img">
+                                            {member.image ? (
+                                                <img
+                                                    src={`${IMAGE_BASE_URL}/${member.image}`}
+                                                    alt={member.name}
+                                                />
+                                            ) : (
+                                                <div className="leadership-card-placeholder">
+                                                    <i className="fas fa-user"></i>
+                                                </div>
                                             )}
-                                            {member.twitter_url && (
-                                                <a href={member.twitter_url} target="_blank" rel="noopener noreferrer">
-                                                    <i className="fab fa-twitter"></i>
-                                                </a>
+                                            {(member.linkedin_url || member.twitter_url) && (
+                                                <div className="leadership-social-overlay">
+                                                    {member.linkedin_url && (
+                                                        <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer">
+                                                            <i className="fab fa-linkedin-in"></i>
+                                                        </a>
+                                                    )}
+                                                    {member.twitter_url && (
+                                                        <a href={member.twitter_url} target="_blank" rel="noopener noreferrer">
+                                                            <i className="fab fa-twitter"></i>
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="leadership-card-info">
+                                            <h5>{member.name}</h5>
+                                            <span className="leadership-card-title">{member.title}</span>
+                                            {member.department && (
+                                                <span className="leadership-card-dept">{member.department}</span>
+                                            )}
+                                            {member.bio && (
+                                                <p className="leadership-card-bio">{member.bio}</p>
                                             )}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}

@@ -48,7 +48,7 @@ const HomeLatestNews = () => {
 
   if (loading) {
     return (
-      <div className="project-style-one-area default-padding project-style-one-area pricing-style-two-area pt-50 bottom-less bg-dark">
+      <div className="project-style-one-area pricing-style-two-area py-3 bg-dark">
         <div className="container">
           <div className="text-center py-5 text-light">
             <div className="spinner-border text-light" role="status">
@@ -62,7 +62,7 @@ const HomeLatestNews = () => {
 
   return (
     <div>
-      <div className="project-style-one-area default-padding project-style-one-area pricing-style-two-area pt-50 bottom-less bg-dark">
+      <div className="project-style-one-area pricing-style-two-area py-3 bg-dark">
         <div className="container">
           <div className="row">
             <div className="col-xl-4">

@@ -13,7 +13,7 @@ const HomeContact = () => {
 
     useEffect(() => {
         AOS.init({
-            duration: 900,
+            duration: 450,
             once: true,
             easing: "ease-out",
         });
@@ -53,7 +53,7 @@ const HomeContact = () => {
 
     if (loading) {
         return (
-            <div className="contact-style-one-area overflow-hidden py-5">
+            <div className="contact-style-one-area overflow-hidden py-3">
                 <div className="container">
                     <div className="text-center py-5">
                         <div className="spinner-border" role="status">
@@ -67,7 +67,7 @@ const HomeContact = () => {
 
     return (
         <div>
-            <div className="contact-style-one-area overflow-hidden py-5">
+            <div className="contact-style-one-area overflow-hidden py-3">
                 <div className="container">
                     <div className="contact-style-one-items" style={{ backgroundImage: "url(/assets/img/shape/map.png)" }}>
                         <div className="row align-center">
@@ -167,7 +167,7 @@ const HomeContact = () => {
                                         </div>
 
                                         <div className="row">
-                                            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="350">
+                                            <div className="col-lg-12" data-aos="fade-up" data-aos-delay="250">
                                                 <div className="form-group comments">
                                                     <textarea className="form-control" placeholder="Enter your message here"></textarea>
                                                 </div>
